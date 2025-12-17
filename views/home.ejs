@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home page</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(12px);
+      padding: 3rem 3.5rem;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+      max-width: 420px;
+      width: 90%;
+    }
+
+    h2 {
+      font-size: 1.6rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      line-height: 1.4;
+    }
+
+    h2 span {
+      color: #ffd86b;
+      font-weight: 700;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.9rem 2.2rem;
+      border-radius: 50px;
+      border: none;
+      background: linear-gradient(135deg, #ffcc70, #ff8c42);
+      color: #2b2b2b;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.35);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.25);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="card">
+    <h2>
+      Join, meet & see our users of <span><%= count %></span>
+    </h2>
+
+    <a href="/user" class="btn">
+      Try not to change our users
+    </a>
+  </div>
+</body>
+</html>

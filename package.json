@@ -1,0 +1,24 @@
+{
+  "name": "delta_sql",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "Manpreet",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^7.6.0",
+    "ejs": "^3.1.10",
+    "express": "^5.2.1",
+    "faker": "^6.6.6",
+    "method-override": "^3.0.0",
+    "mysql2": "^3.15.3",
+    "uuid": "^13.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  }
+}

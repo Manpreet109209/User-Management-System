@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>All Users</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      }
+
+      body {
+        min-height: 100vh;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        padding: 2rem 1rem;
+        color: #333;
+      }
+
+      .container {
+        max-width: 1000px;
+        margin: auto;
+        background: #ffffff;
+        padding: 2.5rem;
+        border-radius: 22px;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.35);
+      }
+
+      .top-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+      }
+
+      h2 {
+        font-size: 1.7rem;
+        font-weight: 700;
+        color: #2b2b2b;
+      }
+
+      .add-btn {
+        padding: 0.6rem 1.4rem;
+        border-radius: 999px;
+        border: none;
+        cursor: pointer;
+        background: linear-gradient(135deg, #ffd6e8, #e0c3fc);
+        color: #4a2c5b;
+        font-weight: 600;
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .add-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 26px rgba(0, 0, 0, 0.3);
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        overflow: hidden;
+        border-radius: 14px;
+      }
+
+      thead {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: #fff;
+      }
+
+      th,
+      td {
+        padding: 1rem 1.1rem;
+        text-align: left;
+      }
+
+      th {
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        letter-spacing: 0.06em;
+      }
+
+      tbody tr {
+        border-bottom: 1px solid #eee;
+        transition: background 0.2s ease;
+      }
+
+      tbody tr:hover {
+        background: #f6f7ff;
+      }
+
+      td {
+        font-size: 0.95rem;
+        color: #444;
+      }
+
+      .actions {
+        display: flex;
+        gap: 0.6rem;
+      }
+
+      .edit-btn {
+        padding: 0.4rem 1.1rem;
+        border-radius: 999px;
+        border: none;
+        background: linear-gradient(135deg, #ffcc70, #ff8c42);
+        color: #2b2b2b;
+        font-size: 0.8rem;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .delete-btn {
+        padding: 0.4rem 1.1rem;
+        border-radius: 999px;
+        border: none;
+        background: linear-gradient(135deg, #ff6b6b, #e63946);
+        color: #fff;
+        font-size: 0.8rem;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .edit-btn:hover,
+      .delete-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 22px rgba(0, 0, 0, 0.3);
+      }
+
+      .cute-back-btn {
+        appearance: none;
+        border: none;
+        cursor: pointer;
+
+        padding: 0.9rem 1.6rem;
+        border-radius: 22px;
+
+        background: linear-gradient(135deg, #ffd6e8, #e0c3fc);
+        color: #4a2c5b;
+
+        font-size: 0.95rem;
+        font-weight: 600;
+        line-height: 1.3;
+
+        box-shadow: 0 10px 22px rgba(0, 0, 0, 0.22);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .cute-back-btn span {
+        display: block;
+        margin-top: 0.25rem;
+        font-size: 0.85rem;
+        font-weight: 700;
+        opacity: 0.85;
+      }
+
+      .cute-back-btn:hover {
+        transform: translateY(-2px) scale(1.03);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.32);
+      }
+
+      .cute-back-btn:active {
+        transform: translateY(0) scale(1);
+        box-shadow: 0 7px 14px rgba(0, 0, 0, 0.22);
+      }
+
+
+      @media (max-width: 700px) {
+        table {
+          font-size: 0.85rem;
+        }
+
+        .actions {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="top-bar">
+        <a href="/">
+        <button class="cute-back-btn">
+          Don’t wanna see?
+          <span>⟵ Go back</span>
+        </button>
+        </a>
+        <h2>List of all users</h2>
+        <form method="GET" action="/user/new">
+          <button class="add-btn">+ Add New User</button>
+        </form>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Email</th>
+            <th>Username</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% for(user of users) { %>
+          <tr>
+            <td><%= user.id %></td>
+            <td><%= user.email %></td>
+            <td><%= user.username %></td>
+            <td>
+              <div class="actions">
+                <form method="get" action="/user/<%= user.id %>/edit">
+                  <button class="edit-btn">Edit</button>
+                </form>
+                <form method="get" action="/user/<%= user.id %>/delete">
+                  <button class="delete-btn">Delete</button>
+                </form>
+              </div>
+            </td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
