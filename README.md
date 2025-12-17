@@ -34,3 +34,7 @@ This project demonstrates server-side rendering, database integration, and RESTf
 ```bash
 git clone <your-repo-url>
 cd <project-folder>
+
+## 📂 Start the Server
+### 1. Open termainl
+### 2. type " npm install "
