@@ -32,8 +32,8 @@ This project demonstrates server-side rendering, database integration, and RESTf
 
 ### 1. Clone the repository
 ```bash
-git clone <your-repo-url>
-cd <project-folder>
+git clone <(https://github.com/Manpreet109209/User-Management-System)>
+cd <User-Management-System>
 
 ## 📂 Start the Server
 ### 1. Open termainl
