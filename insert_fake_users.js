@@ -22,7 +22,7 @@ async function insertFakeUsers(count = 50) {
     // fake plain password (But never stored directly)
     const plainPassword = faker.internet.password(12);
 
-    // hashing it like a real civilized backend
+    // hashing the password like a real civilized backend
     const hashedPassword = await bcrypt.hash(plainPassword, SALT_ROUNDS);
 
     users.push([id, username, email, hashedPassword]);
@@ -44,3 +44,5 @@ async function insertFakeUsers(count = 50) {
 }
 
 insertFakeUsers(100);
+
+// To Add Fake Users Open The Terminal And Type " node insert_fake_users.js "
