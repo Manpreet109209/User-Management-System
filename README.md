@@ -38,4 +38,5 @@ cd <User-Management-System>
 ## 📂 Start the Server
 ### 1. Open termainl
 ### 2. type " npm install "
+### 3. type " nodemon index.js " to start the server!
 ### The App Should be alive at http://localhost:2211/
