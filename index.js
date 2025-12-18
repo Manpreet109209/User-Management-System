@@ -1,179 +1,142 @@
 const { faker } = require("@faker-js/faker");
 const mysql = require("mysql2");
 const express = require("express");
+const bcrypt = require("bcrypt");
 const app = express();
 const path = require("path");
 const methodOverrider = require("method-override");
 
+const SALT_ROUNDS = 10;
+
 app.use(methodOverrider("_method"));
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "/views"));
 
-const conection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    database: 'delta_app',
-    password: '5262'
+const connection = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  database: "delta_app",
+  password: "5262",
 });
 
-let BringRandomUser = () => {
-  return [
-    faker.datatype.uuid(),
-    faker.internet.userName(),
-    faker.internet.email(),
-    faker.internet.password(),
-  ];
-};
-
-// home page
+// HOME
 app.get("/", (req, res) => {
-  let q = "SELECT count(*) FROM users;";
-  try {
-    conection.query(q, (err, result) => {
-        if (err) throw err;
-        let count = result[0]["count(*)"];
-        res.render("home.ejs", { count });
-    });
-} catch (err) {
-    res.send("We are sorry to let you know that we're having a hard time fixing bugs T-T");
-}
+  let q = "SELECT count(*) AS count FROM users";
+  connection.query(q, (err, result) => {
+    if (err) return res.send("DB error");
+    res.render("home.ejs", { count: result[0].count });
+  });
 });
 
-// Shows users
+// SHOW USERS
 app.get("/user", (req, res) => {
-  let q = "SELECT * FROM users;";
-  try {
-    conection.query(q, (err, users) => {
-        if (err) throw err;
-        res.render("users.ejs", {users} );
-    });
-} catch (err) {
-    res.send("We are sorry to let you know that we're having a hard time fixing bugs T-T");
-}
+  let q = "SELECT * FROM users";
+  connection.query(q, (err, users) => {
+    if (err) return res.send("DB error");
+    res.render("users.ejs", { users });
+  });
 });
 
-app.get("/user/:id/edit", (req, res) => {
-  let { id } = req.params;
-  let q = `SELECT * FROM users WHERE id='${id}'`;
-    try {
-    conection.query(q, (err, result) => {
-        if (err) throw err;
-        let user = result[0];
-        res.render("edit.ejs", {user} );
-    });
-} catch (err) {
-    res.send("We are sorry to let you know that we're having a hard time fixing bugs T-T");
-}
-});
-
-// UPDATE DB ROUTE
-app.patch("/user/:id", (req, res) => {
-  let { id } = req.params;
-  let {password: formPass, username: newUsername } = req.body;
-  let q = `SELECT * FROM users WHERE id='${id}'`;
-      try {
-    conection.query(q, (err, result) => {
-        if (err) throw err;
-        let user = result[0];
-        if (formPass != user.password) {
-          res.send("Clean your head and rewrite the Password just cause it's wrong!")
-        } else {
-          let q2 = `UPDATE users SET username='${newUsername}' WHERE id='${id}'`;
-          conection.query(q2, (err, result) => {
-            if (err) throw err;
-            console.log(result);
-            res.redirect("/user");
-          });
-        }
-    });
-} catch (err) {
-    res.send("We are sorry to let you know that we're having a hard time fixing bugs T-T");
-}
-});
-
+// NEW USER FORM
 app.get("/user/new", (req, res) => {
   res.render("new.ejs");
 });
 
-app.post("/user/new", (req, res) => {
+// CREATE USER (HASH PASSWORD)
+app.post("/user/new", async (req, res) => {
   let { username, email, password } = req.body;
   let id = faker.datatype.uuid();
-  let q = `INSERT INTO users (id, username, email, password) VALUES ('${id}', '${username}', '${email}', '${password}')`;
+
   try {
-    conection.query(q, (err, result) => {
+    const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
+
+    let q = `
+      INSERT INTO users (id, username, email, password)
+      VALUES (?, ?, ?, ?)
+    `;
+
+    connection.query(q, [id, username, email, hashedPassword], err => {
       if (err) throw err;
-      console.log(result);
       res.redirect("/user");
     });
   } catch (err) {
-    res.send("We are sorry to let you know that we're having a hard time fixing bugs T-T");
+    res.send("Error creating user");
   }
 });
 
+// EDIT USER
+app.get("/user/:id/edit", (req, res) => {
+  let { id } = req.params;
+  let q = "SELECT * FROM users WHERE id = ?";
+
+  connection.query(q, [id], (err, result) => {
+    if (err) return res.send("DB error");
+    res.render("edit.ejs", { user: result[0] });
+  });
+});
+
+// UPDATE USERNAME (VERIFY PASSWORD WITH BCRYPT)
+app.patch("/user/:id", async (req, res) => {
+  let { id } = req.params;
+  let { password, username } = req.body;
+
+  let q = "SELECT * FROM users WHERE id = ?";
+
+  connection.query(q, [id], async (err, result) => {
+    if (err) return res.send("DB error");
+
+    let user = result[0];
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      return res.send("Wrong password");
+    }
+
+    let q2 = "UPDATE users SET username = ? WHERE id = ?";
+    connection.query(q2, [username, id], err => {
+      if (err) return res.send("Update failed");
+      res.redirect("/user");
+    });
+  });
+});
+
+// DELETE CONFIRM PAGE
 app.get("/user/:id/delete", (req, res) => {
   let { id } = req.params;
-  let q = `SELECT * FROM users WHERE id='${id}'`;
+  let q = "SELECT * FROM users WHERE id = ?";
 
-  try {
-    conection.query(q, (err, result) => {
-      if (err) throw err;
-      let user = result[0];
-      res.render("delete.ejs", { user });
-    });
-  } catch (err) {
-    res.send("some error with DB");
-  }
+  connection.query(q, [id], (err, result) => {
+    if (err) return res.send("DB error");
+    res.render("delete.ejs", { user: result[0] });
+  });
 });
 
-app.delete("/user/:id", (req, res) => {
+// DELETE USER (VERIFY PASSWORD WITH BCRYPT)
+app.delete("/user/:id", async (req, res) => {
   let { id } = req.params;
   let { password } = req.body;
-  let q = `SELECT * FROM users WHERE id='${id}'`;
 
-  try {
-    conection.query(q, (err, result) => {
-      if (err) throw err;
-      let user = result[0];
+  let q = "SELECT * FROM users WHERE id = ?";
 
-      if (user.password != password) {
-        res.send("WRONG Password entered!");
-      } else {
-        let q2 = `DELETE FROM users WHERE id='${id}'`; //Query to Delete
-        conection.query(q2, (err, result) => {
-          if (err) throw err;
-          else {
-            console.log(result);
-            console.log("deleted!");
-            res.redirect("/user");
-          }
-        });
-      }
+  connection.query(q, [id], async (err, result) => {
+    if (err) return res.send("DB error");
+
+    let user = result[0];
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      return res.send("Wrong password");
+    }
+
+    let q2 = "DELETE FROM users WHERE id = ?";
+    connection.query(q2, [id], err => {
+      if (err) return res.send("Delete failed");
+      res.redirect("/user");
     });
-  } catch (err) {
-    res.send("some error with DB");
-  }
+  });
 });
 
-app.listen("2211", () => {
-    console.log("server is listening to port 8080");
+app.listen(2211, () => {
+  console.log("Server running on port 2211");
 });
-
-// INSERTING FAKE USERS
-
-// let q = "INSERT INTO users (id, username, email, password) VALUES ?";
-// let data = [];
-
-// for(let i=0; i <100; i++) {
-//   data.push(BringRandomUser());
-// }
-
-// try {
-//     conection.query(q, [data], (err, res) => {
-//         if (err) throw err;
-//         console.log(res);
-//     });
-// } catch (err) {
-//     console.log(err);
-// }
-// conection.end();
