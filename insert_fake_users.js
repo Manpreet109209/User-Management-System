@@ -1,14 +1,19 @@
 const { faker } = require("@faker-js/faker");
 const mysql = require("mysql2");
 const bcrypt = require("bcrypt");
+require("dotenv").config();
 
 const SALT_ROUNDS = 10;
 
 const connection = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  database: "delta_app",
-  password: "5262",
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  ssl: {
+    rejectUnauthorized: false
+  }
 });
 
 async function insertFakeUsers(count = 50) {
