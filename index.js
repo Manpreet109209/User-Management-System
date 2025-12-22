@@ -16,24 +16,27 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "/views"));
 
 // Database connection using environment variables
-const connection = mysql.createConnection({
+const connection = mysql.createPool({
   host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
+  port: Number(process.env.DB_PORT),
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0,
   ssl: {
-    rejectUnauthorized: false
+    minVersion: "TLSv1.2"
   }
 });
 
-connection.connect(err => {
+// optional sanity check
+connection.query("SELECT 1", err => {
   if (err) {
-    console.error("DB connection failed:", err);
-    process.exit(1); // stop server if DB not connected
-  } else {
-    console.log("DB connected successfully");
+    console.error("DB pool failed:", err);
+    process.exit(1);
   }
+  console.log("DB pool ready");
 });
 
 // ROUTES
@@ -42,7 +45,7 @@ connection.connect(err => {
 app.get("/", (req, res) => {
   const q = "SELECT count(*) AS count FROM users";
   connection.query(q, (err, result) => {
-    if (err) return res.send("DB error");
+    if (err) return res.status(503).render("databaseError");
     res.render("home.ejs", { count: result[0].count });
   });
 });
@@ -51,7 +54,7 @@ app.get("/", (req, res) => {
 app.get("/user", (req, res) => {
   const q = "SELECT * FROM users";
   connection.query(q, (err, users) => {
-    if (err) return res.send("DB error");
+    if (err) return res.status(503).render("databaseError");
     res.render("users.ejs", { users });
   });
 });
@@ -75,7 +78,7 @@ app.post("/user/new", async (req, res) => {
     });
   } catch (err) {
     console.error(err);
-    res.send("Error creating user");
+    return res.status(503).render("databaseError");
   }
 });
 
@@ -84,7 +87,7 @@ app.get("/user/:id/edit", (req, res) => {
   const { id } = req.params;
   const q = "SELECT * FROM users WHERE id = ?";
   connection.query(q, [id], (err, result) => {
-    if (err) return res.send("DB error");
+    if (err) return res.status(503).render("databaseError");
     res.render("edit.ejs", { user: result[0] });
   });
 });
@@ -96,10 +99,10 @@ app.patch("/user/:id", async (req, res) => {
   const q = "SELECT * FROM users WHERE id = ?";
 
   connection.query(q, [id], async (err, result) => {
-    if (err) return res.send("DB error");
+    if (err) return res.status(503).render("databaseError");
     const user = result[0];
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.send("Wrong password");
+    if (!isMatch) return res.status(401).render("error");
 
     const q2 = "UPDATE users SET username = ? WHERE id = ?";
     connection.query(q2, [username, id], err => {
@@ -114,7 +117,7 @@ app.get("/user/:id/delete", (req, res) => {
   const { id } = req.params;
   const q = "SELECT * FROM users WHERE id = ?";
   connection.query(q, [id], (err, result) => {
-    if (err) return res.send("DB error");
+    if (err) return res.status(503).render("databaseError");
     res.render("delete.ejs", { user: result[0] });
   });
 });
@@ -126,10 +129,10 @@ app.delete("/user/:id", async (req, res) => {
   const q = "SELECT * FROM users WHERE id = ?";
 
   connection.query(q, [id], async (err, result) => {
-    if (err) return res.send("DB error");
+    if (err) return res.status(503).render("databaseError");
     const user = result[0];
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.send("Wrong password");
+    if (!isMatch) return res.status(401).render("error");
 
     const q2 = "DELETE FROM users WHERE id = ?";
     connection.query(q2, [id], err => {
