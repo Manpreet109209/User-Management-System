@@ -24,12 +24,13 @@ This project demonstrates server-side rendering, database integration, and RESTf
 - MySQL
 - EJS
 - Faker.js
+- bcrypt
 - Method-Override
 - Nodemon (for development)
 
 ---
 
-Hosted on render = https://user-management-system-l8xd.onrender.com/
+Check it out yourself Here = https://user-management-system-l8xd.onrender.com/
 
 ## 📂 Project Setup
 
