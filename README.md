@@ -11,6 +11,7 @@ This project demonstrates server-side rendering, database integration, and RESTf
 - Create new users
 - Edit existing users (with password verification)
 - Delete users (with password confirmation)
+- Implemented authentication with bcrypt password hashing (to stay secure)
 - MySQL database integration
 - Server-side rendering using EJS
 
