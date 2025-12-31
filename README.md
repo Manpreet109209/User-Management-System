@@ -1,6 +1,6 @@
 # User Management System (Node.js + MySQL)
 
-A full-stack CRUD application built using **Node.js, Express.js, MySQL, and EJS**.
+A CRUD application built using **Node.js, Express.js, MySQL, and EJS**.
 This project demonstrates server-side rendering, database integration, and RESTful routing.
 
 ---
