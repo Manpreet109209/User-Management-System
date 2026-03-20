@@ -1,0 +1,127 @@
+/* ===== BASE ===== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  background: #f5f6f8;
+  font-family: "Poppins", sans-serif;
+  color: #1f2937;
+}
+
+/* ===== CENTER ===== */
+
+.center-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+/* ===== CARD ===== */
+
+.error-card {
+  max-width: 420px;
+  width: 100%;
+  padding: 2.5rem 2rem;
+  border-radius: 20px;
+  background: #ffffff;
+
+  text-align: center;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+}
+
+/* ===== ICON ===== */
+
+.icon {
+  font-size: 2.6rem;
+  margin-bottom: 1rem;
+}
+
+/* ===== TITLE ===== */
+
+.error-card h1 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.6rem;
+}
+
+/* ===== TEXT ===== */
+
+.error-card p {
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin-bottom: 1.6rem;
+  line-height: 1.5;
+}
+
+/* ===== ACTIONS ===== */
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+/* ===== BUTTONS ===== */
+
+.btn {
+  padding: 0.6rem 1.2rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.2s ease;
+}
+
+.btn-primary {
+  background: #111827;
+  color: #fff;
+}
+
+.btn-soft {
+  background: #e5e7eb;
+  color: #111827;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  opacity: 0.9;
+}
+
+/* ===== MOBILE ===== */
+
+@media (max-width: 480px) {
+
+  .error-card {
+    padding: 2rem 1.5rem;
+    border-radius: 16px;
+  }
+
+  .icon {
+    font-size: 2.2rem;
+  }
+
+  .error-card h1 {
+    font-size: 1.1rem;
+  }
+
+  .error-card p {
+    font-size: 0.8rem;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+  .btn {
+    width: 100%;
+    text-align: center;
+    font-size: 0.85rem;
+  }
+}

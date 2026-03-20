@@ -1,0 +1,27 @@
+<link rel="stylesheet" href="/css/new.css" />
+
+<div class="center-wrapper">
+  <div class="card">
+
+    <a href="/user" class="back">
+      <button class="btn btn-soft">⟵ Back</button>
+    </a>
+
+    <h1 class="title">Add a new user</h1>
+
+    <form action="/user/new" method="POST" class="form">
+      <input name="email" type="email" placeholder="Email address" required />
+      <input name="username" type="text" placeholder="Username" required />
+      <input name="password" type="password" placeholder="Password" required />
+
+      <button type="submit" class="btn btn-primary">
+        Create User
+      </button>
+    </form>
+
+    <p class="note">
+      Your data is stored securely and never shared.
+    </p>
+
+  </div>
+</div>

@@ -1,0 +1,36 @@
+<link rel="stylesheet" href="/css/delete.css" />
+
+<div class="center-wrapper">
+  <div class="card">
+
+    <a href="/user" class="back">
+      <button class="btn btn-soft">⟵ Back</button>
+    </a>
+
+    <h3 class="danger-title">
+      Delete user: 
+      <span class="danger-highlight"><%= user.username %></span>
+      <br />
+      Please enter your password to confirm
+    </h3>
+
+    <form method="post" action="/user/<%= user.id %>?_method=DELETE" class="form">
+      <input
+        type="password"
+        name="password"
+        placeholder="Enter your password"
+        class="input"
+        required
+      />
+
+      <button type="submit" class="btn btn-danger">
+        Delete
+      </button>
+    </form>
+
+    <p class="note">
+      This action is permanent. No undo.
+    </p>
+
+  </div>
+</div>

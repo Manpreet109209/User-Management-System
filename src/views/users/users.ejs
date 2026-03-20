@@ -1,0 +1,44 @@
+<link rel="stylesheet" href="/css/user.css" />
+
+<div class="container">
+  <div class="top-bar">
+    <a href="/">
+      <button class="btn btn-soft">⟵ Back</button>
+    </a>
+
+    <h2>All Users</h2>
+
+    <form method="GET" action="/user/new">
+      <button class="btn btn-primary">+ Add User</button>
+    </form>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Email</th>
+        <th>Username</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% users.forEach(user => { %>
+        <tr>
+          <td><%= user.id %></td>
+          <td><%= user.email %></td>
+          <td><%= user.username %></td>
+          <td>
+            <form action="/user/<%= user.id %>/edit" method="get">
+              <button class="btn btn-primary">Edit</button>
+            </form>
+            <form action="/user/<%= user.id %>/delete" method="get">
+              <button class="btn btn-danger">Delete</button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>

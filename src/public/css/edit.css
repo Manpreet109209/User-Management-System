@@ -1,0 +1,182 @@
+/* ===== BASE ===== */
+
+/* THE REAL FIX */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  background: #f5f6f8;
+  font-family: "Poppins", sans-serif;
+  color: #1f2937;
+}
+
+/* ===== CENTER ===== */
+
+.center-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+/* ===== CARD ===== */
+
+.card {
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+  padding: 2.3rem 2rem;
+  border-radius: 20px;
+  background: #ffffff;
+
+  box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+}
+
+/* ===== BACK BUTTON ===== */
+
+.back {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+}
+
+.back .btn {
+  font-size: 0.75rem;
+  padding: 0.4rem 0.9rem;
+}
+
+/* ===== TITLE ===== */
+
+.title {
+  text-align: center;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.6rem;
+}
+
+.highlight {
+  display: block;
+  margin-top: 0.4rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+/* ===== FORM ===== */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* LABEL */
+
+label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #6b7280;
+}
+
+/* INPUT + TEXTAREA */
+
+.input,
+textarea {
+  width: 100%;
+  padding: 0.75rem 0.9rem;
+  border-radius: 10px;
+  border: 1.5px solid #e5e7eb;
+  font-size: 0.9rem;
+  background: #fafafa;
+  transition: all 0.2s ease;
+}
+
+textarea {
+  min-height: 70px;
+  resize: none;
+}
+
+.input:focus,
+textarea:focus {
+  outline: none;
+  border-color: #111827;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(17, 24, 39, 0.08);
+}
+
+/* BUTTON */
+
+.btn {
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+
+.btn-primary {
+  margin-top: 0.5rem;
+  padding: 0.75rem;
+  font-size: 0.9rem;
+  background: #111827;
+  color: white;
+}
+
+.btn-soft {
+  background: #e5e7eb;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  opacity: 0.9;
+}
+
+/* ===== WARNING ===== */
+
+.warning {
+  margin-top: 1.2rem;
+  font-size: 0.75rem;
+  text-align: center;
+  color: #9ca3af;
+}
+
+/* ===== MOBILE ===== */
+
+@media (max-width: 480px) {
+
+  .card {
+    padding: 1.8rem 1.4rem;
+    border-radius: 16px;
+  }
+
+  .title {
+    font-size: 1.1rem;
+  }
+
+  .highlight {
+    font-size: 1rem;
+  }
+
+  .form {
+    gap: 0.8rem;
+  }
+
+  .input,
+  textarea {
+    width: 100%;
+    font-size: 16px; /* prevents iOS zoom madness */
+  }
+
+  .btn-primary {
+    font-size: 0.85rem;
+    padding: 0.7rem;
+  }
+
+  .warning {
+    font-size: 0.7rem;
+  }
+}

@@ -1,0 +1,163 @@
+/* ===== BASE ===== */
+
+body {
+  background: #f5f6f8;
+  font-family: "Poppins", sans-serif;
+  color: #1f2937;
+}
+
+/* ===== CONTAINER ===== */
+
+.container {
+  max-width: 1100px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+}
+
+/* ===== TOP BAR ===== */
+
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.8rem;
+  flex-wrap: wrap;
+}
+
+.top-bar h2 {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+/* ===== BUTTONS ===== */
+
+.btn {
+  padding: 0.55rem 1.2rem;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.btn-primary {
+  background: #111827;
+  color: #fff;
+}
+
+.btn-soft {
+  background: #e5e7eb;
+}
+
+.btn-danger {
+  background: #ef4444;
+  color: white;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  opacity: 0.9;
+}
+
+/* ===== TABLE (DESKTOP) ===== */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+thead {
+  background: #f3f4f6;
+}
+
+th, td {
+  padding: 0.9rem 1rem;
+  text-align: left;
+  font-size: 0.85rem;
+}
+
+th {
+  font-weight: 600;
+  color: #374151;
+}
+
+tbody tr {
+  border-top: 1px solid #eee;
+}
+
+tbody tr:hover {
+  background: #f9fafb;
+}
+
+/* ACTION BUTTONS */
+
+td form {
+  display: inline-block;
+  margin-right: 6px;
+}
+
+/* ===== MOBILE MAGIC (THIS IS THE REAL FIX) ===== */
+
+@media (max-width: 768px) {
+
+  table, thead, tbody, th, td, tr {
+    display: block;
+    width: 100%;
+  }
+
+  thead {
+    display: none; /* hide ugly headers */
+  }
+
+  tbody tr {
+    background: white;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border-radius: 14px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+  }
+
+  td {
+    display: flex;
+    flex-direction: column; /* THIS is the real fix */
+    align-items: flex-start;
+    gap: 2px;
+    padding: 0.6rem 0;
+  }
+
+  td::before {
+    font-size: 0.75rem;
+    color: #6b7280;
+  }
+
+  td:nth-child(1)::before { content: "ID"; }
+  td:nth-child(2)::before { content: "Email"; }
+  td:nth-child(3)::before { content: "Username"; }
+  td:nth-child(4)::before { content: "Actions"; }
+
+  td:last-child {
+    justify-content: flex-start;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    font-size: 0.75rem;
+    padding: 0.4rem 0.9rem;
+  }
+
+  .top-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .top-bar h2 {
+    text-align: center;
+  }
+}

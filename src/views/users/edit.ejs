@@ -1,0 +1,40 @@
+<link rel="stylesheet" href="/css/edit.css" />
+
+<div class="center-wrapper">
+  <div class="card">
+
+    <a href="/user" class="back">
+      <button class="btn btn-soft">⟵ Back</button>
+    </a>
+
+    <h1 class="title">
+      Edit user
+      <span class="highlight"><%= user.username %></span>
+    </h1>
+
+    <form method="post" action="/user/<%= user.id %>?_method=PATCH" class="form">
+      
+      <label>Username</label>
+      <textarea name="username" class="input"><%= user.username %></textarea>
+
+      <label>Confirm password</label>
+      <input
+        type="password"
+        name="password"
+        placeholder="Enter your password"
+        class="input"
+        required
+      />
+
+      <button type="submit" class="btn btn-primary">
+        Save changes
+      </button>
+
+    </form>
+
+    <p class="warning">
+      Changes are permanent. Make sure everything is correct.
+    </p>
+
+  </div>
+</div>
