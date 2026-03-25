@@ -64,7 +64,6 @@ Nodemon
 
 👉 https://user-management-system-l8xd.onrender.com/
 
-📁 Project Structure
 src/
 │
 ├── config/              # Database configuration
@@ -93,21 +92,23 @@ src/
 ├── views/
 │   ├── layouts/         # Main layout
 │   │   └── main.ejs
+│   │
 │   ├── partials/        # Reusable components
 │   │   └── header.ejs
+│   │
 │   ├── users/           # User-related views
 │   │   ├── users.ejs
 │   │   ├── new.ejs
 │   │   ├── edit.ejs
 │   │   └── delete.ejs
+│   │
 │   ├── home.ejs
 │   ├── error.ejs
 │   └── databaseError.ejs
 │
 ├── app.js               # Express app setup
-│
-server.js                # Entry point
-schema.sql               # Database schema
+├── server.js            # Entry point
+└── schema.sql           # Database schema
 
 ⚙️ Installation & Setup
 1️⃣ Clone the repository
