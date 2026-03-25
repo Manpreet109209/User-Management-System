@@ -66,49 +66,93 @@ Nodemon
 
 src/
 │
+
 ├── config/              # Database configuration
+
 │   └── db.js
+
 │
+
 ├── controllers/         # Business logic
+
 │   └── user.controller.js
+
 │
+
 ├── middlewares/         # Custom middlewares
+
 │   └── auth.middleware.js
+
 │
+
 ├── models/              # Database queries
+
 │   └── user.model.js
+
 │
+
 ├── routes/              # Route definitions
+
 │   └── user.routes.js
+
 │
+
 ├── utils/               # Helper functions
+
 │   └── hash.js
+
 │
+
 ├── public/              # Static files
+
 │   ├── css/
+
 │   ├── js/
+
 │   └── images/
+
 │
+
 ├── views/
+
 │   ├── layouts/         # Main layout
+
 │   │   └── main.ejs
+
 │   │
+
 │   ├── partials/        # Reusable components
+
 │   │   └── header.ejs
+
 │   │
+
 │   ├── users/           # User-related views
+
 │   │   ├── users.ejs
+
 │   │   ├── new.ejs
+
 │   │   ├── edit.ejs
+
 │   │   └── delete.ejs
+
 │   │
+
 │   ├── home.ejs
+
 │   ├── error.ejs
+
 │   └── databaseError.ejs
+
 │
+
 ├── app.js               # Express app setup
+
 ├── server.js            # Entry point
+
 └── schema.sql           # Database schema
+
 
 ⚙️ Installation & Setup
 1️⃣ Clone the repository
